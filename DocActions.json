@@ -1,0 +1,117 @@
+// Action envoyé par le rpi
+
+
+{
+  "token": "your token",
+  "action": "goal",
+  "payload":{
+    "id_scorer" : "uuid"
+  }
+}
+
+{
+  "token": "your token",
+  "action": "new_game_no_tournament",
+  "payload":{
+    "card_ids" : [
+      "id_card",
+      "id_card",
+      "id_card",
+      "id_card"
+    ]
+  }
+}
+
+{
+  "token": "your token",
+  "action": "scan_card_question",
+  "payload":{
+    "id_card":"id_card"
+  }
+}
+
+
+{
+  "token": "your token",
+  "action": "games_start",
+  "payload":{
+    "id_game": "uuid"
+  }
+}
+
+
+{
+  "token": "your token",
+  "action": "games_done",
+  "payload":{
+    "id_game": "uuid"
+  }
+}
+
+//First action 
+
+
+
+{
+  "token": "your token",
+  "me": "rpi | front"
+}
+
+
+// Action envoyé par le server ws au rpi
+
+{
+  "token": "your token",
+  "action": "tournament",
+  "payload":{
+    "round": "1",
+    "id_tournament": "id_tournament",
+    "rule": "time | goal",
+    "value" : "5 | 2",
+    "games": [
+        { 
+          "id":"uuid",
+          "players_team_red":[
+            {
+              "name": "julien Legrand",
+              "card_id": "uuid",
+              "id":"uuid"
+            },
+            {
+              "name": "Alexis popieul",
+              "card_id": "uuid",
+              "id":"uuid"
+            }
+          ],
+          "players_team_blue":[
+            {
+              "name": "julien Legrand",
+              "card_id": "uuid",
+              "id":"uuid"
+            },
+            {
+              "name": "Alexis popieul",
+              "card_id": "uuid",
+              "id":"uuid"
+            }
+          ]
+        },
+        {
+
+        }
+    ]
+  }
+}
+
+
+{
+  "token": "your token",
+  "action": "scan_card_answer",
+  "payload":{
+    "name":"name",
+    "id_player":"uuid"
+  }
+}
+
+
+// Action envoyé par le server ws au front

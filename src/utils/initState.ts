@@ -12,14 +12,15 @@ let state = {
 }
 
 const initState =  async () => {
+  
   const tournament: Tournament = await getActiveTournament();
-  const game = await getActiveGame()
+  const game: Game = await getActiveGame()  
 
   state = {
     tournament: tournament,
     game: game
   }
-  console.log(state);
+  console.log(state.game);
 }
 
 export {initState, state};

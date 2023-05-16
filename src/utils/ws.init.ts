@@ -6,32 +6,53 @@ let server: WebSocket.Server;
 
 let rpiWs: WebSocket.WebSocket;
 
+const isEmpty = (obj: {}) => {
+  return Object.keys(obj).length === 0;
+}
+
+const sendState = (action: string, payload: {}, socket: WebSocket.WebSocket) => {
+
+  const payloadToSend = {
+    token: process.env.TOKEN,
+    action: action,
+    payload: payload
+  }
+
+  socket.send(JSON.stringify(payloadToSend));
+};
+
 const initServer = () => {
   server = new WebSocket.Server({ port: 8080 })
   console.log("Websocket server is running... waiting for clients");
-
-  setInterval(() => {
-    server.clients.forEach((client: WebSocket.WebSocket) => {
-      console.log(client.isFront);
-    });
-  }, 5000);
   
   server.on('connection', (socket: WebSocket.WebSocket) => {
-    
-    console.log("Client connected");
-    
     socket.on('message', (message: Buffer) => {
+
+
+      console.log(`Received message => ${message.toString()}`);
+      
   
       const messageJson = JSON.parse(message.toString());
       if(messageJson.action === 'auth'){        
         if(messageJson.me === 'rpi'){
           console.log("RPI connected");
           rpiWs = socket;
-
         }
-        else
+        else if(messageJson.me === 'front'){
+          console.log("Client connected");
           socket.isFront = true;
-        socket.send(JSON.stringify(state));
+        }else{
+          console.log("Unknown client connected");
+          socket.close();
+        }
+
+        //test is state.game is not empty
+        if(!isEmpty(state.game)){
+          sendState("game", state.game, socket);
+        }
+        if(!isEmpty(state.tournament)){
+          sendState("tournament", state.tournament, socket);
+        }
       }else{
         actionRouter(messageJson);
       }

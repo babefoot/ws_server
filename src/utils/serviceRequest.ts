@@ -10,39 +10,46 @@ dotenv.config();
 
 const API_URL = process.env.API_URL;
 
-const goalScoredRequest = (goal: Goal): boolean => {
+const goalScoredRequest = async (goal: Goal): Promise<boolean> => {
+  console.log(goal);
   const data = {
-    "id_scorer": goal.id_scorer,
+    "id_scorer1": goal.scorer1,
+    "id_scorer2": goal.scorer2,
     "team": goal.team,
   }
-  axios.post(`${API_URL}/${goal.id_game}/scoregoal`, data).then((response) => { 
-    console.log(response);
-    return true;
-  }).catch((error) => {
-    console.log(error);
-    return false
-  });
-  return false;
+  const response = await axios.post(`${API_URL}games/${goal.id_game}/scoregoal`, data);
+  return response.status === 200;
 }
 
-const getActiveTournament = (): Promise<Tournament> => {
-  return axios.get(`${API_URL}/tournament/doing`).then((response) => 
-    response.data
-  ).catch((error) => {
+const getActiveTournament = async (): Promise<Tournament> => {
+  try {
+    const response = await axios.get(`${API_URL}tournament/doing`);
+    return response.data;
+  } catch (error) {
     return {} as Tournament;
-  });
+  }
 }
 
 
-const getActiveGame = (): Promise<Game> => {
+const getActiveGame = async (): Promise<Game> => {
   console.log(API_URL);
-  return axios.get(`${API_URL}games/doing`).then((response) => 
-    response.data
-  ).catch(() => {
-    return {} as Game
-  });
+  try {
+    const response = await axios.get(`${API_URL}games/doing`);
+    return response.data;
+  } catch {
+    return {} as Game;
+  }
+}
+
+const endGame = async (id_game: string): Promise<boolean> =>{
+  try {
+    await axios.post(`${API_URL}games/${id_game}/endgame`);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 
 
-export { goalScoredRequest, getActiveTournament, getActiveGame }
+export { goalScoredRequest, getActiveTournament, getActiveGame, endGame }

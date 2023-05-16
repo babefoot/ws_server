@@ -2,10 +2,14 @@ import {server} from './ws.init';
 
 
 
-const broadCastToFront = (message: any) => {
-  server.clients.forEach((client) => {
-    if(client.isFront)
-      client.send(JSON.stringify(message));
+const broadCastToFront = (message: any, action: string) => {
+  server.clients.forEach((client: any) => {
+    if(client.isFront){
+      client.send(JSON.stringify({
+        action: action,
+        payload: message
+      }));
+    }
   });
 }
 

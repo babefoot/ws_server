@@ -1,6 +1,7 @@
 
 interface Goal {
-  id_scorer: string;
+  scorer1: string;
+  scorer2: string;
   id_game: string;
   team: string;
 }

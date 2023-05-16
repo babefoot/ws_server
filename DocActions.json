@@ -115,3 +115,45 @@
 
 
 // Action envoyé par le server ws au front
+{
+  "token": "your token",
+  "action": "tournament",
+  "payload":{
+    "round": "1",
+    "id_tournament": "id_tournament",
+    "rule": "time | goal",
+    "value" : "5 | 2",
+    "games": [
+        { 
+          "id":"uuid",
+          "players_team_red":[
+            {
+              "name": "julien Legrand",
+              "card_id": "uuid",
+              "id":"uuid"
+            },
+            {
+              "name": "Alexis popieul",
+              "card_id": "uuid",
+              "id":"uuid"
+            }
+          ],
+          "players_team_blue":[
+            {
+              "name": "julien Legrand",
+              "card_id": "uuid",
+              "id":"uuid"
+            },
+            {
+              "name": "Alexis popieul",
+              "card_id": "uuid",
+              "id":"uuid"
+            }
+          ]
+        },
+        {
+
+        }
+    ]
+  }
+}

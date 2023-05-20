@@ -28,10 +28,8 @@ const initServer = () => {
   server.on('connection', (socket: WebSocket.WebSocket) => {
     socket.on('message', (message: Buffer) => {
 
-
       console.log(`Received message => ${message.toString()}`);
       
-  
       const messageJson = JSON.parse(message.toString());
       if(messageJson.action === 'auth'){        
         if(messageJson.me === 'rpi'){
@@ -47,12 +45,7 @@ const initServer = () => {
         }
 
         //test is state.game is not empty
-        if(!isEmpty(state.game)){
-          sendState("game", state.game, socket);
-        }
-        if(!isEmpty(state.tournament)){
-          sendState("tournament", state.tournament, socket);
-        }
+        sendState("game", state.game, socket);
       }else{
         actionRouter(messageJson);
       }

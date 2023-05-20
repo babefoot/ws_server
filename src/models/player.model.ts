@@ -7,6 +7,7 @@ interface Player {
   lastname: string;
   nb_buts: number;
   nb_matchs_won: number;
+  team: string;
   
 };
 

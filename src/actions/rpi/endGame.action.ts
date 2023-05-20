@@ -1,20 +1,14 @@
-import Goal from "../../models/goal.model";
-import { endGame } from "../../utils/serviceRequest";
-import { server } from "../../utils/ws.init";
+import { endGame, createEmptyGame } from "../../utils/serviceRequest";
 import { state } from "../../utils/initState";
-import Game from "../../models/game.model";
-import broadCastToFront from "../../utils/broadCastToFront";
+import {broadCastToFront, sendToRpi} from "../../utils/broadCastToFront";
 
-const endGameAction = async (payload: {
-    id_game: string
-}) => {
+
+const endGameAction = async (id_game: string) => {
     console.log("ENDING GAME ACTION");
-    
-    endGame(payload.id_game);
-    state.game = {} as Game;
-
-    broadCastToFront(payload, "end_game")
-
+    await endGame(id_game);
+    state.game = createEmptyGame();
+    broadCastToFront(id_game, "end_game")
+    sendToRpi(state.game, "game")
 }
 
 export default endGameAction; 

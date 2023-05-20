@@ -26,20 +26,27 @@ def print_time(ws):
         print("1. Send a goal team red")
         print("2. Send a goal team blue")
         print("3. Send a end of game")
-        print("4. Quit")
+        print("4. Scan a card")
+        print("5. Quit")
         choice = input("Enter your choice: ")
         #switch case
         if choice == '1':
-            id_scorer = input("Enter the id of the scorer: ")
+            scorers = []
+            id_scorer = input("Enter the id of the scorer : ")
+            while id_scorer != '':
+                scorers.append(id_scorer)
+                id_scorer = input("Enter the id of the scorer : ")
             id_game = input("Enter the id of the game: ")
-            payload = "{ \"team\" : \"r\", \"id_game\" : \""+id_game+"\", \"scorer\" : \""+ id_scorer + "\"}"
+            payload = "{ \"team\" : \"R\", \"id_game\" : \""+id_game+"\", \"scorers\" : " + str(scorers).replace("'", '"') + "}"
             message = '{ "token":"'+token+'", "action":"goal", "payload" :' + payload + '}'
-            ws.send(message)
         elif choice == '2':
-            id_scorer1 = input("Enter the id of the scorer 1 : ")
-            id_scorer2 = input("Enter the id of the scorer 2 : ")
+            scorers = []
+            id_scorer = input("Enter the id of the scorer : ")
+            while id_scorer != '':
+                scorers.append(id_scorer)
+                id_scorer = input("Enter the id of the scorer : ")
             id_game = input("Enter the id of the game: ")
-            payload = "{ \"team\" : \"b\", \"id_game\" : \""+id_game+"\", \"scorer1\" : \""+ id_scorer1 + "\" " + ", \"scorer2\" : \"" + id_scorer2 + "\"}"
+            payload = "{ \"team\" : \"B\", \"id_game\" : \""+id_game+"\", \"scorers\" : " + str(scorers).replace("'", '"') + "}"
             message = '{ "token":"'+token+'", "action":"goal", "payload" :' + payload + '}'
             ws.send(message)
         elif choice == '3':
@@ -48,6 +55,11 @@ def print_time(ws):
             message = '{ "token":"'+token+'", "action":"end_game", "payload" :' + payload + '}'
             ws.send(message)
         elif choice == '4':
+            id_card = input("Enter the id of the card: ")
+            payload = "{ \"id_card\" : \""+id_card+"\"}"
+            message = '{ "token":"'+token+'", "action":"scan_card", "payload" :' + payload + '}'
+            ws.send(message)
+        elif choice == '5':
             break
         else:
             print("Invalid choice")

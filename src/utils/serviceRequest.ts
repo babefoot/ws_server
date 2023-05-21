@@ -47,7 +47,8 @@ const getActiveGame = async (): Promise<Game> => {
   console.log(API_URL);
   try {
     const response = await axios.get(`${API_URL}games/doing`);
-
+    console.log(response.data);
+    
     if(!response.data){
       return createEmptyGame();
     }
@@ -77,6 +78,16 @@ const getUser = async (idCard: string): Promise<Player> => {
   }
 }
 
+const addGameWon = async (id_players: string[]): Promise<boolean> => {
+
+  try {
+    await axios.post(`${API_URL}games/win`, id_players);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 const createGame = async (players: Player[]): Promise<Game> => {
   try {
     let playersTeamBlue: string[] = [];
@@ -101,4 +112,4 @@ const createGame = async (players: Player[]): Promise<Game> => {
   }
 }
 
-export { goalScoredRequest, getActiveTournament, getActiveGame, endGame, getUser, createGame, createEmptyGame }
+export { goalScoredRequest, getActiveTournament, getActiveGame, endGame, getUser, createGame, createEmptyGame, addGameWon }

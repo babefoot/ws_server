@@ -4,8 +4,8 @@ import { createGame } from "../../utils/serviceRequest";
 import { getActiveGame } from "../../utils/serviceRequest";
 
 const startGameAction = async () => {
-    const result = await createGame(state.game.players);
-    state.game = await getActiveGame();
+    state.game = await createGame(state.game.players);
+    console.log(state.game);
     broadCastToFront(state.game, "game");
     sendToRpi(state.game, "game");
 }
